@@ -1,0 +1,18 @@
+<div class="course-card">
+<!--  //<div class="course">-->
+    <div class="course-info-container">
+      <div class="course-header-container">
+        <h2 class="course-name">{{ course.title }}</h2>
+        <p>{{ course.description }}</p>
+      </div>
+      <div class="course-description-container">
+        <p><span class="text">Authors: </span>{{ course.authors }}</p>
+        <p><span class="text">Duration: </span>{{ course.duration | duration }}</p>
+        <p><span class="text">Created: </span>{{ course.creationDate | date:'dd.MM.yyyy' }}</p>
+        <ng-content></ng-content>
+      </div>
+    </div>
+<!--  </div>-->
+</div>
+
+
