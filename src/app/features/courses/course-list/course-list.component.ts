@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Course } from '../../models/course';
-import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+import { Course } from '../../models/course';
+import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
 
 @Component({
   selector: 'app-course-list',

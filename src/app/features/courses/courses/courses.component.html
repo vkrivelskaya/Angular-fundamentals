@@ -1,4 +1,9 @@
 <app-header></app-header>
+<app-button
+  class="modal-button"
+  [buttonText]="modalWindowButtonText"
+  (click)="changeModalVisibility()">
+</app-button>
 <app-info
   *ngIf="isCoursesListEmpty; else courseList"
   [title]="title"
@@ -6,6 +11,17 @@
 >
   <app-button [buttonText]="addNewCourse"></app-button>
 </app-info>
+
+<app-modal-window
+  *ngIf="isModalWindow"
+  [modalTitle]="modalWindowTitle"
+  [modalMessage]="modalWindowMessage"
+  [okButtonText]="okButtonText"
+  [cancelButtonText]="cancelButtonText"
+  (clickModalButton)="onButtonClick($event)"
+>
+</app-modal-window>
+
 <ng-template #courseList>
   <app-course-list
     [courses]="courses"
@@ -14,6 +30,8 @@
   >
   </app-course-list>
 </ng-template>
+
+
 
 
 

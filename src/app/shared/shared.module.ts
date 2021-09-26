@@ -10,7 +10,8 @@ import {
   HeaderComponent,
   InfoComponent,
   NavigationComponent,
-  SearchComponent
+  SearchComponent,
+  ModalWindowComponent
 } from './components';
 
 const COMPONENTS = [
@@ -19,7 +20,8 @@ const COMPONENTS = [
   ButtonComponent,
   NavigationComponent,
   InfoComponent,
-  SearchComponent
+  SearchComponent,
+  ModalWindowComponent
 ];
 
 @NgModule({
