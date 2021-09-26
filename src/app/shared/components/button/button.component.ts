@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { ButtonsEnum } from '../../enums/buttons.enum';
 
@@ -7,13 +7,9 @@ import { ButtonsEnum } from '../../enums/buttons.enum';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent {
   @Input() buttonText!: ButtonsEnum;
   @Input() buttonIcon: any;
 
   constructor() {}
-
-  ngOnInit(): void {
-    console.log(this.buttonText);
-  }
 }
