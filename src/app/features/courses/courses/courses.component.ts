@@ -12,6 +12,7 @@ export class CoursesComponent implements OnInit {
   courses = Courses;
   isEditable!: boolean;
   isCoursesListEmpty!: boolean;
+  buttonText = ButtonsEnum.logOut;
   addNewCourse = ButtonsEnum.addCourse;
   okButtonText = ButtonsEnum.ok;
   cancelButtonText = ButtonsEnum.cancel;

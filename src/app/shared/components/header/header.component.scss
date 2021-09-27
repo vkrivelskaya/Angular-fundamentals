@@ -1,18 +1,33 @@
 @import "../../../../styles/variables";
 
-.navigation-container {
+.logo-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 25px;
   border: 1px solid $red;
 
-  .right-block-navigation {
+  .logo {
     display: flex;
-    width: 15%;
-    justify-content: space-between;
     align-items: center;
-    font-size: 1rem;
+    position: relative;
 
-    .userName {
-      font-weight: bold;
+    .logo-img {
+      position: absolute;
+      left: 5px;
+      width: 65px;
+      height: 65px;
+    }
+
+    .logo-text {
+      width: fit-content;
+      height: fit-content;
+      margin: 0;
+      padding: 10px 10px 10px 80px;
+      font-size: 1.7rem;
+      text-transform: uppercase;
+      color: $white;
+      background-color: $gray;
     }
   }
 }

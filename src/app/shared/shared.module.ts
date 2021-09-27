@@ -9,7 +9,6 @@ import {
   FooterComponent,
   HeaderComponent,
   InfoComponent,
-  NavigationComponent,
   SearchComponent,
   ModalWindowComponent
 } from './components';
@@ -18,7 +17,6 @@ const COMPONENTS = [
   HeaderComponent,
   FooterComponent,
   ButtonComponent,
-  NavigationComponent,
   InfoComponent,
   SearchComponent,
   ModalWindowComponent

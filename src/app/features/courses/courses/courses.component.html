@@ -1,4 +1,10 @@
-<app-header></app-header>
+<app-header class="navigation">
+  <div class="right-block-navigation">
+    <span class="userName">User</span>
+    <app-button [buttonText]="buttonText"></app-button>
+  </div>
+</app-header>
+
 <app-button
   class="modal-button"
   [buttonText]="modalWindowButtonText"

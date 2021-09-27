@@ -133,10 +133,6 @@
           "single",
           { "allowTemplateLiterals": true }
         ],
-        "comma-dangle": [
-          "error",
-          "always-multiline"
-        ],
         "curly": "error",
         "eol-last": "error",
         "eqeqeq": [
@@ -209,10 +205,6 @@
           "error",
           "1tbs",
           { "allowSingleLine": true }
-        ],
-        "space-before-function-paren": [
-          "error",
-          "never"
         ],
         "space-before-blocks": "error",
         "no-empty": "error",

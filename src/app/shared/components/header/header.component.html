@@ -1,13 +1,7 @@
-<ng-container>
-  <div class="navigation-container">
-    <app-navigation class="navigation">
-      <div class="right-block-navigation">
-        <span class="userName"> User 1</span>
-        <app-button
-         [buttonText]="buttonText"
-        >
-        </app-button>
-      </div>
-    </app-navigation>
+<div class="logo-container">
+  <div class="logo">
+    <img class="logo-img" src="assets/images/logo_school.svg" alt="Courses logo">
+    <p class="logo-text"> {{ logo }}</p>
   </div>
-</ng-container>
+  <ng-content></ng-content>
+</div>
