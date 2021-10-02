@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule } from '@angular/forms';
 
 import { DurationPipe } from './pipes/duration.pipe';
 import {
@@ -12,6 +13,7 @@ import {
   SearchComponent,
   ModalWindowComponent
 } from './components';
+import { EmailValidatorDirective } from './directives/email-validator.directive';
 
 const COMPONENTS = [
   HeaderComponent,
@@ -23,8 +25,8 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS, DurationPipe],
-  imports: [CommonModule, RouterModule, FontAwesomeModule],
-  exports: [...COMPONENTS, DurationPipe, CommonModule, FontAwesomeModule]
+  declarations: [...COMPONENTS, DurationPipe, EmailValidatorDirective],
+  imports: [CommonModule, RouterModule, FontAwesomeModule, FormsModule],
+  exports: [...COMPONENTS, DurationPipe, CommonModule, FontAwesomeModule, FormsModule, EmailValidatorDirective]
 })
 export class SharedModule {}

@@ -1,1 +1,64 @@
-<p>login works!</p>
+<h2>Login</h2>
+<form
+  class="input-container"
+  #form="ngForm"
+  [class.invalid]="form.invalid && (form.touched || form.submitted)"
+  (ngSubmit)="login(form)"
+>
+  <div class="email-container">
+    <label class="label">Email</label>
+    <input
+      class="input-field"
+      type="text"
+      name="mail"
+      required
+      appEmailValidator
+      [(ngModel)]="mail"
+      #emailField="ngModel"
+    >
+    <div
+      class="invalid-message"
+      *ngIf="emailField.invalid && (form.submitted || emailField.touched)"
+    >
+      <div *ngIf="emailField.errors?.required">
+        Email is required.
+      </div>
+      <div *ngIf="emailField.errors?.emailvalidator">
+        Email is not valid
+      </div>
+    </div>
+  </div>
+  <div class="password-container">
+    <label class="label">Password</label>
+    <input
+      class="input-field"
+      type="password"
+      required
+      name="password"
+      [(ngModel)]="password"
+      #passwordField="ngModel"
+    >
+    <div
+      class="invalid-message"
+      *ngIf="passwordField.invalid && (form.submitted || passwordField.touched)"
+    >
+      Password is required.
+    </div>
+  </div>
+  <div class="login-container">
+    <app-button
+      [buttonText]="loginButtonText"
+      [buttonType]="buttonType"
+    >
+<!--      //(click)="login($event)"  >-->
+    </app-button>
+    <div class="registration">
+      <p class="registration-message">
+        If you don't have an account you can
+      </p>
+      <a href="#"> Registration</a>
+    </div>
+  </div>
+</form>
+
+

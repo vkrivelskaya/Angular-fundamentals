@@ -3,6 +3,8 @@
   button_text: buttonText,
   button: true
   }"
+  [type]="buttonType"
+  [disabled]="disabled"
 >
   <fa-icon *ngIf="buttonIcon" [icon]="buttonIcon"></fa-icon>
   {{ buttonText }}

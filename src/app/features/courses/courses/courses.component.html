@@ -10,6 +10,15 @@
   [buttonText]="modalWindowButtonText"
   (click)="changeModalVisibility()">
 </app-button>
+
+<app-search
+  [searchInputPlaceholder]="searchInputPlaceholder"
+  (search)="searchCourse($event)"
+></app-search>
+
+<app-login></app-login>
+<app-registration></app-registration>
+
 <app-info
   *ngIf="isCoursesListEmpty; else courseList"
   [title]="title"

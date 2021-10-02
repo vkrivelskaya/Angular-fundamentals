@@ -10,6 +10,7 @@ import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
 })
 export class CoursesComponent implements OnInit {
   courses = Courses;
+  searchInputPlaceholder = 'Angular';
   isEditable!: boolean;
   isCoursesListEmpty!: boolean;
   buttonText = ButtonsEnum.logOut;
@@ -79,5 +80,9 @@ export class CoursesComponent implements OnInit {
     this.changeModalVisibility();
 
     console.log(this.modalResult);
+  }
+
+  searchCourse(value: string): void {
+    console.log(value);
   }
 }

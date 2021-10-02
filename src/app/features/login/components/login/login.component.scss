@@ -1,0 +1,55 @@
+@import '../../../../../styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  margin-top: 10px;
+  border: 1px solid $light-blue;
+}
+
+.input-container {
+  height: 20%;
+  margin-bottom: 20px;
+
+  .password-container, .email-container {
+    display: flex;
+    flex-direction: column;
+
+    .label {
+      display: block;
+      padding-bottom: 5px;
+      font-weight: bold;
+    }
+  }
+}
+
+.login-container, .input-container, .registration {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login-container {
+  height: 12%;
+
+  .registration-message {
+    margin: 0;
+  }
+}
+
+.input-field {
+  width: 200px;
+  border: 1px solid $orange;
+}
+
+.invalid-message {
+  color: $red;
+}
+
+.invalid input {
+  border: 1px solid $red;
+}

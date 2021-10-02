@@ -10,6 +10,8 @@ import { ButtonsEnum } from '../../enums/buttons.enum';
 export class ButtonComponent {
   @Input() buttonText!: ButtonsEnum;
   @Input() buttonIcon: any;
+  @Input() buttonType!: string;
+  @Input() disabled!: boolean;
 
   constructor() {}
 }
