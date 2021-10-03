@@ -8,5 +8,8 @@ export enum ButtonsEnum {
   modalWindow = 'Modal window',
   search = 'Search',
   login = 'Login',
-  registration = 'Registration'
+  registration = 'Registration',
+  createCourse = 'Create course',
+  createAuthor = 'Create author',
+  deleteAuthor = 'Delete author'
 }

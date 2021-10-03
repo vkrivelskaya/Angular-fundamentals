@@ -1,1 +1,115 @@
-<p>course works!</p>
+<form
+  [formGroup]="courseForm"
+  #course="ngForm"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="course-header-container">
+    <div class="title-container">
+      <label class="label">Title</label>
+      <input
+        class="input-field input-field_title"
+        [class.invalid]="courseForm.controls['title'].invalid && (courseForm.controls['title'].touched || course.submitted)"
+        type="text"
+        formControlName="title"
+      >
+      <div
+        class="invalid-message"
+        *ngIf="courseForm.controls['title'].invalid && (course.submitted || courseForm.controls['title'].touched)"
+      >
+        <div *ngIf="courseForm.controls['title'].errors?.required">
+          Title is required.
+        </div>
+      </div>
+    </div>
+    <app-button
+      class="create-course-button"
+      [buttonText]="createCourseButtonText"
+      [buttonType]="buttonType"
+    >
+    </app-button>
+  </div>
+  <div class="description-container">
+    <label class="label">Description</label>
+    <textarea
+      rows="17"
+      class="input-field input-field_description"
+      [class.invalid]="courseForm.controls['description'].invalid && (courseForm.controls['description'].touched || course.submitted)"
+      formControlName="description"
+    >
+    </textarea>
+    <div
+      class="invalid-message"
+      *ngIf="courseForm.controls['description'].invalid && (course.submitted || courseForm.controls['description'].touched)"
+    >
+      <div *ngIf="courseForm.controls['description'].errors?.required">
+        Description is required.
+      </div>
+    </div>
+  </div>
+  <div class="other-course-info-container">
+    <div class="authors-duration-edit-container">
+      <div  formGroupName="author" class="author-container">
+        <h2 class="heading">Add authors</h2>
+        <label class="label">Author name</label>
+        <input
+          class="input-field input-field_author"
+          [class.invalid]="courseForm.controls['author'].invalid && (courseForm.controls['author'].touched || course.submitted)"
+          type="text"
+          formControlName="author"
+        >
+        <div
+          class="invalid-message"
+          *ngIf="courseForm.get('author')?.get('author')?.invalid && (course.submitted || courseForm.get('author')?.get('author')?.touched)"
+        >
+          <div *ngIf="courseForm.get('author')?.get('author')?.errors?.authorValidator">
+            The author's name can only consist latin letters and numbers.
+          </div>
+        </div>
+        <app-button
+          class="add-author-button"
+          [buttonText]="createAuthorButtonText"
+          (click)="addAuthor()"
+          [disabled]="courseForm.controls['author'].invalid"
+        >
+        </app-button>
+      </div>
+      <div class="duration-container">
+        <h2 class="heading">Duration</h2>
+        <label class="label">Duration</label>
+        <input
+          class="input-field input-field_duration"
+          [class.invalid]="courseForm.controls['duration'].invalid && (courseForm.controls['duration'].touched || course.submitted)"
+          type="number"
+          formControlName="duration"
+        >
+        <div
+          class="invalid-message"
+          *ngIf="courseForm.controls['duration'].invalid && (course.submitted || courseForm.controls['duration'].touched)"
+        >
+          <div *ngIf="courseForm.controls['duration'].errors?.required">
+            Duration is required.
+          </div>
+          <div *ngIf="courseForm.controls['duration'].errors?.min">
+            Duration must not be less than zero.
+          </div>
+        </div>
+        <p class="duration">
+          <span>Duration: </span>
+          <span>{{ courseForm.controls['duration'].value | duration }}</span>
+        </p>
+      </div>
+
+    </div>
+    <div  formArrayName="authors" class="authors-list-container">
+      <h2 class="heading">Authors list</h2>
+      <div class="authors-list" *ngFor="let author of authors.controls; let i=index">
+        <input class="author" type="text" [formControlName]="i">
+        <app-button
+          [buttonText]="deleteAuthorButtonText"
+          (click)="deleteAuthor(i)"
+        >
+        </app-button>
+      </div>
+    </div>
+  </div>
+</form>
