@@ -2,13 +2,13 @@
 <form
   class="input-container"
   #registrationForm="ngForm"
-  [class.invalid]="registrationForm.invalid && (registrationForm.touched || registrationForm.submitted)"
-  (ngSubmit)="registrate(registrationForm)"
+  (ngSubmit)="register(registrationForm)"
 >
   <div class="name-container">
     <label class="label">Name</label>
     <input
       class="input-field"
+      [class.invalid]="nameField.invalid && (nameField.touched || registrationForm.submitted)"
       type="text"
       name="name"
       required
@@ -32,6 +32,7 @@
     <label class="label">Email</label>
     <input
       class="input-field"
+      [class.invalid]="emailField.invalid && (emailField.touched || registrationForm.submitted)"
       type="text"
       name="mail"
       required
@@ -55,6 +56,7 @@
     <label class="label">Password</label>
     <input
       class="input-field"
+      [class.invalid]="passwordField.invalid && (passwordField.touched || registrationForm.submitted)"
       type="password"
       required
       name="password"
@@ -70,6 +72,7 @@
   </div>
   <div class="registration-container">
     <app-button
+      class="registration-button"
       [buttonText]="registrationButtonText"
       [buttonType]="buttonType"
     >

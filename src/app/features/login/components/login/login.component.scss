@@ -11,7 +11,7 @@
 }
 
 .input-container {
-  height: 20%;
+  height: 30%;
   margin-bottom: 20px;
 
   .password-container, .email-container {
@@ -23,6 +23,10 @@
       padding-bottom: 5px;
       font-weight: bold;
     }
+  }
+
+  .password-container {
+    margin-bottom: 45px;
   }
 }
 
@@ -39,10 +43,15 @@
   .registration-message {
     margin: 0;
   }
+
+  .login-button {
+    margin-bottom: 20px;
+  }
 }
 
 .input-field {
   width: 200px;
+  height: 20px;
   border: 1px solid $orange;
 }
 
@@ -50,6 +59,6 @@
   color: $red;
 }
 
-.invalid input {
+.invalid {
   border: 1px solid $red;
 }

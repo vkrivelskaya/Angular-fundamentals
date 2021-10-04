@@ -2,13 +2,13 @@
 <form
   class="input-container"
   #form="ngForm"
-  [class.invalid]="form.invalid && (form.touched || form.submitted)"
   (ngSubmit)="login(form)"
 >
   <div class="email-container">
     <label class="label">Email</label>
     <input
       class="input-field"
+      [class.invalid]="emailField.invalid && (emailField.touched || form.submitted)"
       type="text"
       name="mail"
       required
@@ -32,6 +32,7 @@
     <label class="label">Password</label>
     <input
       class="input-field"
+      [class.invalid]="passwordField.invalid && (passwordField.touched || form.submitted)"
       type="password"
       required
       name="password"
@@ -47,10 +48,10 @@
   </div>
   <div class="login-container">
     <app-button
+      class="login-button"
       [buttonText]="loginButtonText"
       [buttonType]="buttonType"
     >
-<!--      //(click)="login($event)"  >-->
     </app-button>
     <div class="registration">
       <p class="registration-message">

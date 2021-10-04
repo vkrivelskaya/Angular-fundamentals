@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
 import { NgForm } from '@angular/forms';
+
+import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
 
 @Component({
   selector: 'app-registration',
@@ -16,7 +17,7 @@ export class RegistrationComponent {
 
   constructor() {}
 
-  registrate(registrationForm: NgForm) {
+  register(registrationForm: NgForm) {
     if (registrationForm && registrationForm.valid) {
       const userEmail = registrationForm.form.value.mail;
       const password = registrationForm.form.value.password;

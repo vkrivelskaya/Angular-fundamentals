@@ -15,7 +15,7 @@ export const Courses: Course[] = [
   {
     title: 'Java',
     creationDate: new Date('2019-11-18'),
-    duration: 135,
+    duration: 125,
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ' +
       'ut labore et dolore magna aliqua. Non sodales neque sodales ut etiam sit amet nisl. Egestas sed ' +

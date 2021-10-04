@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { ButtonsEnum } from '../../../../shared/enums/buttons.enum';
 import { authorNameValidator } from '../../../../shared/directives/author-validator.directive';
 
@@ -47,7 +48,7 @@ export class CourseComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.courseForm.valid && this.author.valid) {
+    if (this.courseForm.valid && this.authors.valid) {
       console.log(this.courseForm.value);
     }
   }

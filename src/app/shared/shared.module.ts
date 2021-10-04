@@ -14,6 +14,8 @@ import {
   ModalWindowComponent
 } from './components';
 import { EmailValidatorDirective } from './directives/email-validator.directive';
+import { CreationDatePipe } from './pipes/creation-date.pipe';
+import { StringJoinerPipe } from './pipes/string-joiner.pipe';
 
 const COMPONENTS = [
   HeaderComponent,
@@ -24,9 +26,11 @@ const COMPONENTS = [
   ModalWindowComponent
 ];
 
+const PIPES = [DurationPipe, CreationDatePipe, StringJoinerPipe];
+
 @NgModule({
-  declarations: [...COMPONENTS, DurationPipe, EmailValidatorDirective],
+  declarations: [...COMPONENTS, PIPES, EmailValidatorDirective],
   imports: [CommonModule, RouterModule, FontAwesomeModule, FormsModule],
-  exports: [...COMPONENTS, DurationPipe, CommonModule, FontAwesomeModule, FormsModule, EmailValidatorDirective]
+  exports: [...COMPONENTS, PIPES, CommonModule, FontAwesomeModule, FormsModule, EmailValidatorDirective]
 })
 export class SharedModule {}
