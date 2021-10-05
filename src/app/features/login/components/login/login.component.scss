@@ -26,6 +26,7 @@
   }
 
   .password-container {
+    position: relative;
     margin-bottom: 45px;
   }
 }
@@ -61,4 +62,11 @@
 
 .invalid {
   border: 1px solid $red;
+}
+
+.icon {
+  position: absolute;
+  bottom: 3%;
+  right: 5%;
+  cursor: pointer;
 }

@@ -16,6 +16,7 @@ import {
 import { EmailValidatorDirective } from './directives/email-validator.directive';
 import { CreationDatePipe } from './pipes/creation-date.pipe';
 import { StringJoinerPipe } from './pipes/string-joiner.pipe';
+import { TogglePasswordDirective } from './directives/toggle-password.directive';
 
 const COMPONENTS = [
   HeaderComponent,
@@ -29,8 +30,16 @@ const COMPONENTS = [
 const PIPES = [DurationPipe, CreationDatePipe, StringJoinerPipe];
 
 @NgModule({
-  declarations: [...COMPONENTS, PIPES, EmailValidatorDirective],
+  declarations: [...COMPONENTS, ...PIPES, EmailValidatorDirective, TogglePasswordDirective],
   imports: [CommonModule, RouterModule, FontAwesomeModule, FormsModule],
-  exports: [...COMPONENTS, PIPES, CommonModule, FontAwesomeModule, FormsModule, EmailValidatorDirective]
+  exports: [
+    ...COMPONENTS,
+    ...PIPES,
+    CommonModule,
+    FontAwesomeModule,
+    FormsModule,
+    EmailValidatorDirective,
+    TogglePasswordDirective
+  ]
 })
 export class SharedModule {}

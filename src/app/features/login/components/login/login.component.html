@@ -31,6 +31,7 @@
   <div class="password-container">
     <label class="label">Password</label>
     <input
+      appTogglePassword
       class="input-field"
       [class.invalid]="passwordField.invalid && (passwordField.touched || form.submitted)"
       type="password"
@@ -38,7 +39,15 @@
       name="password"
       [(ngModel)]="password"
       #passwordField="ngModel"
+      #togglePassword="togglePassword"
+      #passwordToggleField
     >
+    <fa-icon
+      class="icon"
+      [icon]="passwordIcon"
+      (click)="togglePassword.changeInputType()"
+    >
+    </fa-icon>
     <div
       class="invalid-message"
       *ngIf="passwordField.invalid && (form.submitted || passwordField.touched)"

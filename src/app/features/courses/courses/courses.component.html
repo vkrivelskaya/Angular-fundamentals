@@ -14,12 +14,8 @@
 <app-search
   [searchInputPlaceholder]="searchInputPlaceholder"
   (search)="searchCourse($event)"
-></app-search>
-
-<app-login></app-login>
-<app-registration></app-registration>
-<app-course></app-course>
-
+>
+</app-search>
 
 <app-info
   *ngIf="isCoursesListEmpty; else courseList"
