@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { AuthorsService } from './authors.service';
-import { IAuthor } from '../constants/models';
+import { IAuthor } from '../../constants/models';
 
 @Injectable({
   providedIn: 'root'

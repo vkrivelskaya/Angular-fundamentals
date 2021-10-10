@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthorizedGuard } from './auth/guards/authorized.guard';
 
 const routes: Routes = [
   {
@@ -12,7 +13,8 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('./features/courses/courses.module').then(m => m.CoursesModule)
+    loadChildren: () => import('./features/courses/courses.module').then(m => m.CoursesModule),
+    canLoad: [AuthorizedGuard]
   },
   {
     path: '**',

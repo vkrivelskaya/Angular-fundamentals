@@ -34,8 +34,7 @@ export class AuthService {
     if (token) {
       const httpOptions = {
         headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          Authorization: token
+          'Content-Type': 'application/json'
         })
       };
       return this.http.delete<HttpResponse<void>>(this.logoutUrl, httpOptions).pipe(

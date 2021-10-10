@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ICourse } from '../constants/models';
+import { ICourse } from '../../constants/models';
 import { CoursesService } from './courses.service';
 
 @Injectable({
