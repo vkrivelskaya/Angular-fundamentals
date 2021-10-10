@@ -9,7 +9,7 @@ import { CoursesModule } from './features/courses/courses.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, AppRoutingModule, CoursesModule, HttpClientModule],
-  providers: [],
+  providers: [{ provide: 'Window', useValue: window }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
