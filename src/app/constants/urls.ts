@@ -7,3 +7,4 @@ export const coursesUrl = 'http://localhost:3000/courses';
 export const registerUrl = 'http://localhost:3000/register';
 export const loginUrl = 'http://localhost:3000/login';
 export const logoutUrl = 'http://localhost:3000/logout';
+export const userUrl = 'http://localhost:3000/users/me';

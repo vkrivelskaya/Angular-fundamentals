@@ -26,3 +26,14 @@ export interface ILoginResponse {
     name: string;
   };
 }
+
+export interface IUserResponse {
+  successful: boolean;
+  result: {
+    name: string;
+    email: string;
+    password: string;
+    role: string;
+    id: string;
+  };
+}

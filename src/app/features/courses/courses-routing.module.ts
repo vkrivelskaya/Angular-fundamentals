@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CoursesComponent } from './courses/courses.component';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { CourseComponent } from '../course/components/course/course.component';
+import { AdminGuard } from '../../user/guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -16,11 +17,13 @@ const routes: Routes = [
       },
       {
         path: 'courses/add',
-        component: CourseComponent
+        component: CourseComponent,
+        canActivate: [AdminGuard]
       },
       {
         path: 'courses/edit/:id',
-        component: CourseComponent
+        component: CourseComponent,
+        canActivate: [AdminGuard]
       }
     ]
   }
