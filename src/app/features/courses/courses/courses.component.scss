@@ -1,0 +1,21 @@
+@import "../../../../styles/variables";
+
+.right-block-navigation {
+  display: flex;
+  width: 15%;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+
+  .userName {
+    font-weight: bold;
+  }
+}
+
+.modal-button {
+  display: flex;
+  justify-content: flex-start;
+  width: 16%;
+  margin-top: 10px;
+}
+

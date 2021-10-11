@@ -1,0 +1,48 @@
+.course-card {
+  display: flex;
+
+  .course-info-container, .course-header-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .course-header-container {
+    flex-direction: column;
+    flex: 2.5;
+    padding-right: 20px;
+
+    .course-name {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 0;
+    }
+  }
+
+  .course-description-container {
+    flex: 0.7;
+
+    .text {
+      font-weight: bold;
+      padding-right: 5px;
+    }
+
+    .description-item {
+      margin-bottom: 8px;
+    }
+  }
+}
+
+.authors-list-container {
+  display: flex;
+
+  .authors-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+
+    .author {
+      padding-right: 5px;
+    }
+  }
+}

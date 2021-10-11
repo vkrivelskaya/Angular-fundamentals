@@ -1,0 +1,22 @@
+<div class="course-card">
+  <div class="course-info-container">
+    <div class="course-header-container">
+      <h2 class="course-name">{{ course.title }}</h2>
+      <p>{{ course.description }}</p>
+    </div>
+    <div class="course-description-container">
+      <div class="description-item authors-list-container">
+        <span class="text">Authors: </span>
+        <ul class="authors-list">
+          <li *ngFor="let author of authors, index as i" class="author">
+            <span>{{ author }}</span>
+            <span *ngIf="i < authors.length - 1">,</span>
+          </li>
+        </ul>
+      </div>
+      <p class="description-item"><span class="text">Duration: </span>{{ course.duration | duration }}</p>
+      <p class="description-item"><span class="text">Created: </span>{{ course.creationDate | date:'dd.MM.yyyy' }}</p>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

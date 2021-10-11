@@ -1,0 +1,29 @@
+<div class="modal">
+  <div class="modal-content">
+    <app-button
+      #closeButton
+      class="close-button"
+      [buttonIcon]="closeIcon"
+      (click)="onButtonClick(closeButton)"
+    >
+    </app-button>
+    <div class="modal-text-container">
+      <h2>{{ modalTitle }}</h2>
+      <p>{{ modalMessage }}</p>
+    </div>
+    <div class="buttons-container">
+      <app-button
+        #okButton
+        [buttonText]="okButtonText"
+        (click)="onButtonClick(okButton)"
+      >
+      </app-button>
+      <app-button
+        #cancelButton
+        [buttonText]="cancelButtonText"
+        (click)="onButtonClick(cancelButton)"
+      >
+      </app-button>
+    </div>
+  </div>
+</div>

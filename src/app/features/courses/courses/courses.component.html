@@ -1,0 +1,43 @@
+<app-header class="navigation">
+  <div class="right-block-navigation">
+    <span class="userName">User</span>
+    <app-button [buttonText]="buttonText"></app-button>
+  </div>
+</app-header>
+
+<app-button
+  class="modal-button"
+  [buttonText]="modalWindowButtonText"
+  (click)="changeModalVisibility()">
+</app-button>
+<app-info
+  *ngIf="isCoursesListEmpty; else courseList"
+  [title]="title"
+  [text]="text"
+>
+  <app-button [buttonText]="addNewCourse"></app-button>
+</app-info>
+
+<app-modal-window
+  *ngIf="isModalWindow"
+  [modalTitle]="modalWindowTitle"
+  [modalMessage]="modalWindowMessage"
+  [okButtonText]="okButtonText"
+  [cancelButtonText]="cancelButtonText"
+  (clickModalButton)="onButtonClick($event)"
+>
+</app-modal-window>
+
+<ng-template #courseList>
+  <app-course-list
+    [courses]="courses"
+    [isEditable]="isEditable"
+    (clickButton)="onButtonClick($event)"
+  >
+  </app-course-list>
+</ng-template>
+
+
+
+
+

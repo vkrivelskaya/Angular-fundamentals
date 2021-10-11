@@ -1,0 +1,27 @@
+@import "../../../../styles/variables";
+
+.button {
+  width: 100%;
+  padding: 5px 8px;
+  font-size: .9rem;
+  border: 2px solid $purple;
+
+  &_text {
+    padding: 5px 35px;
+  }
+
+  &:hover {
+    background-color: $light-grayish-violet;
+  }
+
+  &:focus {
+    box-shadow: 2px 3px 3px $dark-moderate-violet;
+    border-color: $dark-moderate-violet;
+  }
+
+  &:active {
+    background-color: $dark-moderate-blue;
+    border-color: $dark-moderate-blue;
+    color: $white;
+  }
+}

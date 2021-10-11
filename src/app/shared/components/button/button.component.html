@@ -1,0 +1,9 @@
+<button
+  [ngClass]="{
+  button_text: buttonText,
+  button: true
+  }"
+>
+  <fa-icon *ngIf="buttonIcon" [icon]="buttonIcon"></fa-icon>
+  {{ buttonText }}
+</button>
