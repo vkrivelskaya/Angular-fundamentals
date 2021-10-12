@@ -13,7 +13,7 @@ export interface ICourse {
 }
 
 export interface IUser {
-  name: string;
+  name?: string;
   email: string;
   password: string;
 }
@@ -25,6 +25,11 @@ export interface ILoginResponse {
     email: string;
     name: string;
   };
+}
+
+export interface IRegisterResponse {
+  successful: boolean;
+  result: string;
 }
 
 export interface IUserResponse {

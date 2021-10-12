@@ -19,7 +19,8 @@
           class="button"
           *ngIf="isEditable"
           [buttonIcon]="penIcon"
-          (click)="onButtonClick(editButton)"
+          [link]="[editCourseLink, course.id]"
+
         >
         </app-button>
         <app-button
@@ -27,6 +28,7 @@
           class="button"
           *ngIf="isEditable"
           [buttonIcon]="trashIcon"
+          [link]="[deleteCourseLink, course.id]"
           (click)="onButtonClick(deleteButton)"
         >
         </app-button>

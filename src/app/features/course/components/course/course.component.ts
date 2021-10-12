@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ButtonsEnum } from '../../../../shared/enums/buttons.enum';
 import { authorNameValidator } from '../../../../shared/directives/author-validator.directive';
+import { CoursesStoreService } from '../../../../services/courses/courses-store.service';
+import { Observable } from 'rxjs';
+import { ICourse } from '../../../../constants/models';
 
 @Component({
   selector: 'app-course',
@@ -16,8 +20,14 @@ export class CourseComponent implements OnInit {
   deleteAuthorButtonText = ButtonsEnum.deleteAuthor;
   courseForm!: FormGroup;
   author!: FormGroup;
+  course$!: Observable<ICourse>;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private coursesStoreService: CoursesStoreService
+  ) {}
 
   ngOnInit() {
     this.courseForm = this.fb.group(
@@ -33,6 +43,12 @@ export class CourseComponent implements OnInit {
       },
       { updateOn: 'blur' }
     );
+
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (id) {
+      this.course$ = this.coursesStoreService.getCourse(id);
+    }
   }
 
   get authors() {

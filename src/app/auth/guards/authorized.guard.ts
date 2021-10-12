@@ -21,8 +21,7 @@ export class AuthorizedGuard implements CanLoad {
           return true;
         }
 
-        this.router.parseUrl('/login');
-        return false;
+        return this.router.parseUrl('/login');
       })
     );
   }

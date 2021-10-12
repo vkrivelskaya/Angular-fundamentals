@@ -14,7 +14,7 @@
   height: 30%;
   margin-bottom: 20px;
 
-  .password-container, .email-container {
+  .password-container, .email-container, .name-container {
     display: flex;
     flex-direction: column;
 
@@ -51,7 +51,7 @@
 }
 
 .input-field {
-  width: 200px;
+  width: 300px;
   height: 20px;
   border: 1px solid $orange;
 }

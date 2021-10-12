@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Courses } from '../../mock/course-data.mock';
 import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
+import { CoursesStoreService } from '../../../services/courses/courses-store.service';
+import { ICourse } from '../../../constants/models';
+import { UserStoreService } from '../../../user/services/user-store.service';
 
 @Component({
   selector: 'app-courses',
@@ -9,7 +11,7 @@ import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
   styleUrls: ['./courses.component.scss']
 })
 export class CoursesComponent implements OnInit {
-  courses = Courses;
+  courses!: ICourse[];
   searchInputPlaceholder = 'Angular';
   isEditable!: boolean;
   isCoursesListEmpty!: boolean;
@@ -19,7 +21,7 @@ export class CoursesComponent implements OnInit {
   cancelButtonText = ButtonsEnum.cancel;
   modalWindowButtonText = ButtonsEnum.modalWindow;
   modalWindowTitle = 'Title';
-  modalWindowMessage = 'Modal window message';
+  modalWindowMessage = 'Delete course?';
   title = 'Your list is empty';
   text = `Please, use '${this.addNewCourse}' button to add your first course`;
   isModalWindow = false;
@@ -33,11 +35,19 @@ export class CoursesComponent implements OnInit {
   };
   modalResult!: boolean;
 
-  constructor() {}
+  constructor(private coursesStore: CoursesStoreService, private userStoreService: UserStoreService) {}
 
   ngOnInit(): void {
-    this.isEditable = true;
-    this.isCoursesListEmpty = this.checkCoursesListLength();
+    this.checkUserRole();
+
+    this.coursesStore.courses$.subscribe(courses => {
+      this.courses = courses;
+      this.isCoursesListEmpty = this.checkCoursesListLength();
+    });
+  }
+
+  checkUserRole(): void {
+    this.userStoreService.isAdmin$.subscribe(data => (this.isEditable = data));
   }
 
   checkCoursesListLength(): boolean {
@@ -61,7 +71,7 @@ export class CoursesComponent implements OnInit {
   }
 
   deleteCourse(): void {
-    console.log('Delete button clicked!');
+    this.isModalWindow = true;
   }
 
   changeModalVisibility(): void {
@@ -83,6 +93,6 @@ export class CoursesComponent implements OnInit {
   }
 
   searchCourse(value: string): void {
-    console.log(value);
+    this.courses = this.coursesStore.searchCourse(value);
   }
 }

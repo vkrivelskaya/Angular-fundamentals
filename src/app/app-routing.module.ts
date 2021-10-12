@@ -12,13 +12,13 @@ const routes: Routes = [
     loadChildren: () => import('./features/registration/registration.module').then(m => m.RegistrationModule)
   },
   {
-    path: '',
+    path: 'courses',
     loadChildren: () => import('./features/courses/courses.module').then(m => m.CoursesModule),
     canLoad: [AuthorizedGuard]
   },
   {
-    path: '**',
-    redirectTo: '',
+    path: '',
+    redirectTo: '/courses',
     pathMatch: 'full'
   }
 ];

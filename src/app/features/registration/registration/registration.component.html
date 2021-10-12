@@ -60,6 +60,7 @@
       [class.invalid]="passwordField.invalid && (passwordField.touched || registrationForm.submitted)"
       type="password"
       required
+      minlength="6"
       name="password"
       [(ngModel)]="password"
       #passwordField="ngModel"
@@ -76,7 +77,12 @@
       class="invalid-message"
       *ngIf="passwordField.invalid && (registrationForm.submitted || passwordField.touched)"
     >
-      Password is required.
+      <div *ngIf="passwordField.errors?.required">
+        Password is required.
+      </div>
+      <div *ngIf="passwordField.errors?.minlength">
+        Password must be at least 6 characters long.
+      </div>
     </div>
   </div>
   <div class="registration-container">
@@ -90,7 +96,7 @@
       <p class="registration-message">
         If you have an account you can
       </p>
-      <a href="#"> Login</a>
+      <a routerLink="/login"> Login</a>
     </div>
   </div>
 </form>

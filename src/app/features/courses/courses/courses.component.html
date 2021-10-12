@@ -5,12 +5,6 @@
   </div>
 </app-header>
 
-<app-button
-  class="modal-button"
-  [buttonText]="modalWindowButtonText"
-  (click)="changeModalVisibility()">
-</app-button>
-
 <app-search
   [searchInputPlaceholder]="searchInputPlaceholder"
   (search)="searchCourse($event)"

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IAuthor, ICourse } from '../../constants/models';
 import { coursesAddUrl, coursesAllUrl, coursesUrl } from '../../constants/urls';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class CoursesService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<ICourse[]> {
-    return this.http.get<ICourse[]>(this.coursesAllUrl);
+    return this.http.get<{ result: ICourse[] }>(this.coursesAllUrl).pipe(map(data => data.result));
   }
 
   createCourse(course: ICourse): Observable<ICourse> {

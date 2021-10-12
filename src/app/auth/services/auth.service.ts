@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 
 import { SessionStorageService } from './session-storage.service';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { ILoginResponse, IUser } from '../../constants/models';
+import { ILoginResponse, IRegisterResponse, IUser } from '../../constants/models';
 import { loginUrl, logoutUrl, registerUrl } from '../../constants/urls';
 
 @Injectable({
@@ -20,11 +20,13 @@ export class AuthService {
 
   constructor(private sessionStorageService: SessionStorageService, private http: HttpClient) {}
 
-  login(user: IUser): void {
-    this.http.post<ILoginResponse>(this.loginUrl, user).pipe(
+  login(user: IUser): Observable<boolean> {
+    return this.http.post<ILoginResponse>(this.loginUrl, user).pipe(
       map(data => {
         this.sessionStorageService.setToken(data.result);
         this.isAuthorized$$.next(data.successful);
+
+        return data.successful;
       })
     );
   }
@@ -52,6 +54,6 @@ export class AuthService {
   }
 
   register(user: IUser): Observable<boolean> {
-    return this.http.post<boolean>(this.registerUrl, user);
+    return this.http.post<IRegisterResponse>(this.registerUrl, user).pipe(map(data => data.successful));
   }
 }

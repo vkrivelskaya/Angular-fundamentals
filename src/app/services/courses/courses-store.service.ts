@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ICourse } from '../../constants/models';
 import { CoursesService } from './courses.service';
 
@@ -11,10 +11,17 @@ export class CoursesStoreService {
   private courses$$ = new BehaviorSubject<ICourse[]>([]);
 
   isLoading$ = this.isLoading$$.asObservable();
-  authors$ = this.courses$$.asObservable();
-  course!: ICourse;
+  isDataInitialized = false;
 
   constructor(private coursesService: CoursesService) {}
+
+  get courses$(): Observable<ICourse[]> {
+    if (!this.isDataInitialized) {
+      this.getAll();
+      this.isDataInitialized = true;
+    }
+    return this.courses$$.asObservable();
+  }
 
   getAll(): void {
     this.isLoading$$.next(true);
@@ -57,9 +64,9 @@ export class CoursesStoreService {
     );
   }
 
-  getCourse(id: string) {
+  getCourse(id: string): Observable<ICourse> {
     this.isLoading$$.next(true);
-    this.coursesService.getCourse(id).subscribe(course => (this.course = course));
+    return this.coursesService.getCourse(id);
   }
 
   deleteCourse(id: string): void {
@@ -76,8 +83,11 @@ export class CoursesStoreService {
     );
   }
 
-  searchCourse(field: keyof ICourse, value: string): ICourse[] {
+  searchCourse(value: string): ICourse[] {
     const courses = this.courses$$.getValue();
-    return courses.filter(el => el[field] === value);
+
+    return courses.filter(el => {
+      return Object.values(el).filter(val => String(val).includes(value)).length > 0;
+    });
   }
 }
