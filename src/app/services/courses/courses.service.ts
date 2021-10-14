@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IAuthor, ICourse } from '../../constants/models';
+import { IAuthor, ICourse, ICourseResponse } from '../../constants/models';
 import { coursesAddUrl, coursesAllUrl, coursesUrl } from '../../constants/urls';
 import { map } from 'rxjs/operators';
 
@@ -27,8 +27,8 @@ export class CoursesService {
     return this.http.post<ICourse>(this.coursesAddUrl, course, this.httpOptions);
   }
 
-  getCourse(id: string): Observable<ICourse> {
-    return this.http.get<ICourse>(`${this.coursesUrl}/${id}`);
+  getCourse(id: string): Observable<ICourseResponse> {
+    return this.http.get<ICourseResponse>(`${this.coursesUrl}/${id}`);
   }
 
   deleteCourse(id: string): Observable<boolean> {

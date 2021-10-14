@@ -6,9 +6,10 @@ import { CourseListComponent } from './course-list/course-list.component';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CourseModule } from '../course/course.module';
+import { RouterCoursesComponent } from './router-courses/router-courses.component';
 
 @NgModule({
-  declarations: [CoursesComponent, CourseListComponent, CourseCardComponent],
+  declarations: [CoursesComponent, CourseListComponent, CourseCardComponent, RouterCoursesComponent],
   imports: [SharedModule, CoursesRoutingModule, CourseModule],
   exports: [CoursesComponent]
 })

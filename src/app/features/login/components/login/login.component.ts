@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
 
       this.authService.login(user).subscribe(data => {
         if (data) {
-          this.router.navigateByUrl('/courses');
+          this.router.navigateByUrl('/courses/list');
           this.userStoreService.getUser();
         } else {
           this.router.navigateByUrl('/registration');

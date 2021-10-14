@@ -16,7 +16,7 @@ export class CourseListComponent {
   @Input() isEditable!: boolean;
   @Output() clickButton = new EventEmitter();
 
-  editCourseLink = '/edit';
+  editCourseLink = 'edit';
   deleteCourseLink = 'courses';
 
   penIcon = faPen;
@@ -25,7 +25,7 @@ export class CourseListComponent {
 
   constructor() {}
 
-  onButtonClick(value: any): void {
-    this.clickButton.emit(value);
+  onButtonClick(value: any, args?: { [key: string]: any }): void {
+    this.clickButton.emit({ button: value, args: args });
   }
 }

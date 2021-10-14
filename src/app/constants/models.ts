@@ -42,3 +42,15 @@ export interface IUserResponse {
     id: string;
   };
 }
+
+export interface ICourseResponse {
+  successful: boolean;
+  result: {
+    title: string;
+    description: string;
+    creationDate: string;
+    duration: number;
+    authors: string[];
+    id: string;
+  };
+}

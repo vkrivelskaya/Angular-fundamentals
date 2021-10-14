@@ -22,7 +22,7 @@ export class NotAuthorizedGuard implements CanActivate {
           return true;
         }
 
-        return this.router.parseUrl('/courses');
+        return this.router.parseUrl('/courses/list');
       })
     );
   }

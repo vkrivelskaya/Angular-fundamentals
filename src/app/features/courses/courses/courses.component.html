@@ -1,16 +1,3 @@
-<app-header class="navigation">
-  <div class="right-block-navigation">
-    <span class="userName">User</span>
-    <app-button [buttonText]="buttonText"></app-button>
-  </div>
-</app-header>
-
-<app-search
-  [searchInputPlaceholder]="searchInputPlaceholder"
-  (search)="searchCourse($event)"
->
-</app-search>
-
 <app-info
   *ngIf="isCoursesListEmpty; else courseList"
   [title]="title"
@@ -22,14 +9,20 @@
 <app-modal-window
   *ngIf="isModalWindow"
   [modalTitle]="modalWindowTitle"
+  [deletedCourseId]="deletedCourseId"
   [modalMessage]="modalWindowMessage"
   [okButtonText]="okButtonText"
   [cancelButtonText]="cancelButtonText"
   (clickModalButton)="onButtonClick($event)"
 >
 </app-modal-window>
-
+<router-outlet></router-outlet>
 <ng-template #courseList>
+  <app-search
+    [searchInputPlaceholder]="searchInputPlaceholder"
+    (search)="searchCourse($event)"
+  >
+  </app-search>
   <app-course-list
     [courses]="courses"
     [isEditable]="isEditable"

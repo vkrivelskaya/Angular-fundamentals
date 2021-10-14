@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonsEnum } from '../../../../shared/enums/buttons.enum';
 import { authorNameValidator } from '../../../../shared/directives/author-validator.directive';
 import { CoursesStoreService } from '../../../../services/courses/courses-store.service';
-import { Observable } from 'rxjs';
 import { ICourse } from '../../../../constants/models';
 
 @Component({
@@ -20,7 +19,7 @@ export class CourseComponent implements OnInit {
   deleteAuthorButtonText = ButtonsEnum.deleteAuthor;
   courseForm!: FormGroup;
   author!: FormGroup;
-  course$!: Observable<ICourse>;
+  courseItem!: ICourse;
 
   constructor(
     private fb: FormBuilder,
@@ -30,24 +29,26 @@ export class CourseComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.courseForm = this.fb.group(
-      {
-        title: ['', [Validators.required]],
-        description: ['', [Validators.required]],
-        duration: ['', [Validators.required, Validators.min(1)]],
-        author: this.fb.group({
-          author: ['', [authorNameValidator()]]
-        }),
-
-        authors: this.fb.array([])
-      },
-      { updateOn: 'blur' }
-    );
-
     const id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
-      this.course$ = this.coursesStoreService.getCourse(id);
+      this.coursesStoreService.getCourse(id).subscribe(course => {
+        this.courseItem = course;
+
+        this.courseForm = this.fb.group(
+          {
+            title: [`${course.title}`, [Validators.required]],
+            description: [`${course.description}`, [Validators.required]],
+            duration: [`${course.duration}`, [Validators.required, Validators.min(1)]],
+            author: this.fb.group({
+              author: [`${course.authors[0]}`, [authorNameValidator()]]
+            }),
+
+            authors: this.fb.array([])
+          },
+          { updateOn: 'blur' }
+        );
+      });
     }
   }
 
@@ -65,7 +66,23 @@ export class CourseComponent implements OnInit {
 
   onSubmit() {
     if (this.courseForm.valid && this.authors.valid) {
-      console.log(this.courseForm.value);
+      if (this.courseItem) {
+        const updatedCourse: ICourse = {
+          title: this.courseForm.value.title,
+          description: this.courseForm.value.description,
+          creationDate: this.courseForm.value.creationDate,
+          duration: this.courseForm.value.duration,
+          authors: this.courseForm.value.authors,
+          id: this.courseItem.id
+        };
+        this.coursesStoreService.editCourse(updatedCourse);
+        this.coursesStoreService.isLoading$.subscribe(data => {
+          if (!data) {
+            this.router.navigateByUrl('courses/list');
+          }
+        });
+        console.log(updatedCourse);
+      }
     }
   }
 }

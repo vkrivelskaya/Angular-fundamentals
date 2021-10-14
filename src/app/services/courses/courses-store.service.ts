@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ICourse } from '../../constants/models';
 import { CoursesService } from './courses.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -66,7 +67,7 @@ export class CoursesStoreService {
 
   getCourse(id: string): Observable<ICourse> {
     this.isLoading$$.next(true);
-    return this.coursesService.getCourse(id);
+    return this.coursesService.getCourse(id).pipe(map(data => data.result));
   }
 
   deleteCourse(id: string): void {

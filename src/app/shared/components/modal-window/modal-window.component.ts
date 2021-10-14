@@ -12,6 +12,7 @@ export class ModalWindowComponent {
   @Input() cancelButtonText!: ButtonsEnum;
   @Input() modalTitle!: string;
   @Input() modalMessage!: string;
+  @Input() deletedCourseId!: string;
   @Output() clickModalButton = new EventEmitter();
 
   closeIcon = faTimes;
@@ -19,6 +20,6 @@ export class ModalWindowComponent {
   constructor() {}
 
   onButtonClick(value: any): void {
-    this.clickModalButton.emit(value);
+    this.clickModalButton.emit({ button: value, args: { courseID: this.deletedCourseId } });
   }
 }
