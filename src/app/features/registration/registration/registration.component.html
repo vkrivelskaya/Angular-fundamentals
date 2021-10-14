@@ -1,1 +1,97 @@
-<p>registration works!</p>
+<h2>Registration</h2>
+<form
+  class="input-container"
+  #registrationForm="ngForm"
+  (ngSubmit)="register(registrationForm)"
+>
+  <div class="name-container">
+    <label class="label">Name</label>
+    <input
+      class="input-field"
+      [class.invalid]="nameField.invalid && (nameField.touched || registrationForm.submitted)"
+      type="text"
+      name="name"
+      required
+      minlength="6"
+      [(ngModel)]="name"
+      #nameField="ngModel"
+    >
+    <div
+      class="invalid-message"
+      *ngIf="nameField.invalid && (registrationForm.submitted || nameField.touched)"
+    >
+      <div *ngIf="nameField.errors?.required">
+        Name is required.
+      </div>
+      <div *ngIf="nameField.errors?.minlength">
+        Name must be at least 6 characters long.
+      </div>
+    </div>
+  </div>
+  <div class="email-container">
+    <label class="label">Email</label>
+    <input
+      class="input-field"
+      [class.invalid]="emailField.invalid && (emailField.touched || registrationForm.submitted)"
+      type="text"
+      name="mail"
+      required
+      appEmailValidator
+      [(ngModel)]="mail"
+      #emailField="ngModel"
+    >
+    <div
+      class="invalid-message"
+      *ngIf="emailField.invalid && (registrationForm.submitted || emailField.touched)"
+    >
+      <div *ngIf="emailField.errors?.required">
+        Email is required.
+      </div>
+      <div *ngIf="emailField.errors?.emailvalidator">
+        Email is not valid
+      </div>
+    </div>
+  </div>
+  <div class="password-container">
+    <label class="label">Password</label>
+    <input
+      appTogglePassword
+      class="input-field"
+      [class.invalid]="passwordField.invalid && (passwordField.touched || registrationForm.submitted)"
+      type="password"
+      required
+      name="password"
+      [(ngModel)]="password"
+      #passwordField="ngModel"
+      #togglePassword="togglePassword"
+      #passwordToggleField
+    >
+    <fa-icon
+      class="icon"
+      [icon]="passwordIcon"
+      (click)="togglePassword.changeInputType()"
+    >
+    </fa-icon>
+    <div
+      class="invalid-message"
+      *ngIf="passwordField.invalid && (registrationForm.submitted || passwordField.touched)"
+    >
+      Password is required.
+    </div>
+  </div>
+  <div class="registration-container">
+    <app-button
+      class="registration-button"
+      [buttonText]="registrationButtonText"
+      [buttonType]="buttonType"
+    >
+    </app-button>
+    <div class="registration">
+      <p class="registration-message">
+        If you have an account you can
+      </p>
+      <a href="#"> Login</a>
+    </div>
+  </div>
+</form>
+

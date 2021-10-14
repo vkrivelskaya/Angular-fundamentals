@@ -1,0 +1,109 @@
+@import '../../../../../styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 20px;
+  margin-top: 10px;
+  border: 1px solid $light-blue;
+}
+
+.course-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 20px;
+
+  .title-container {
+    display: flex;
+    flex-direction: column;
+    flex:3;
+  }
+
+  .create-course-button {
+    flex: 1;
+  }
+}
+
+.description-container {
+  padding-bottom: 20px;
+}
+
+.label {
+  display: block;
+  padding-bottom: 5px;
+  font-weight: bold;
+}
+
+.input-field {
+  width: 300px;
+  padding: 5px;
+  border: 1px solid $orange;
+  box-sizing: border-box;
+
+  &_title {
+    width: 600px;
+  }
+
+  &_description {
+    width: 100%;
+    padding: 0;
+  }
+
+  &_author, &_duration {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+.other-course-info-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border: 1px solid $gray;
+
+  .authors-duration-edit-container {
+    flex: 1;
+    padding-right: 40px;
+
+    .author-container {
+      display: flex;
+      flex-direction: column;
+
+      .add-author-button {
+        width: 30%;
+        align-self: center;
+      }
+    }
+  }
+
+  .authors-list-container {
+    flex: 1;
+    padding-left: 30px;
+
+    .authors-list {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.heading {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.invalid-message {
+  color: $red;
+}
+
+.invalid {
+  border: 1px solid $red;
+}
+
+.author {
+  border: none;
+  background-color: transparent;
+}

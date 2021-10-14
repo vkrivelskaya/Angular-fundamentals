@@ -1,1 +1,11 @@
-<p>search works!</p>
+<input
+  class="search-input-field"
+  type='text' [placeholder]="searchInputPlaceholder"
+  [(ngModel)]="searchCourse"
+>
+<app-button
+  class="search-button"
+  [buttonText]="searchButtonText"
+  (click)="onSearchButtonClick(searchCourse)"
+>
+</app-button>

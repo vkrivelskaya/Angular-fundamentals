@@ -1,0 +1,12 @@
+@import '../../../../styles/variables';
+
+:host{
+  display: flex;
+  margin-top: 10px;
+}
+
+.search-input-field {
+  flex:3;
+  margin-right: 25px;
+  border: 1px solid $orange;
+}

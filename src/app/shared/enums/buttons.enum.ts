@@ -5,5 +5,11 @@ export enum ButtonsEnum {
   showCourse = 'Show course',
   ok = 'Ok',
   cancel = 'Cancel',
-  modalWindow = 'Modal window'
+  modalWindow = 'Modal window',
+  search = 'Search',
+  login = 'Login',
+  registration = 'Registration',
+  createCourse = 'Create course',
+  createAuthor = 'Create author',
+  deleteAuthor = 'Delete author'
 }
