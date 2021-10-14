@@ -9,7 +9,7 @@ export interface ICourse {
   creationDate: string;
   duration: number;
   authors: string[];
-  id: string;
+  id?: string;
 }
 
 export interface IUser {

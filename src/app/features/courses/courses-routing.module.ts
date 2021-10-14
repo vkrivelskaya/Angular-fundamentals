@@ -21,13 +21,13 @@ const routes: Routes = [
       },
       {
         path: 'add',
-        component: CourseComponent
-        // canActivate: [AdminGuard]
+        component: CourseComponent,
+        canActivate: [AdminGuard]
       },
       {
         path: 'edit/:id',
-        component: CourseComponent
-        // canActivate: [AdminGuard]
+        component: CourseComponent,
+        canActivate: [AdminGuard]
       }
     ]
   }

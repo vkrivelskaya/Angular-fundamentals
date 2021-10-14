@@ -1,9 +1,13 @@
 <app-info
-  *ngIf="isCoursesListEmpty; else courseList"
+*ngIf="isCoursesListEmpty; else courseList"
   [title]="title"
   [text]="text"
 >
-  <app-button [buttonText]="addNewCourse"></app-button>
+  <app-button
+    [buttonText]="addNewCourseText"
+    (click)="addNewCourse()"
+  >
+  </app-button>
 </app-info>
 
 <app-modal-window

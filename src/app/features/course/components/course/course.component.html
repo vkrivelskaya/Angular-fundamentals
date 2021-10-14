@@ -12,7 +12,7 @@
         [class.invalid]="courseForm.controls['title'].invalid && (courseForm.controls['title'].touched || course.submitted)"
         type="text"
         formControlName="title"
-        [value]="courseItem.title"
+        [placeholder]="courseItem ? courseItem.title: ''"
       >
       <div
         class="invalid-message"
@@ -26,7 +26,7 @@
     <app-button
       class="create-course-button"
       [buttonText]="createCourseButtonText"
-      [buttonType]="buttonType"
+      [buttonType]="buttonTypeSubmit"
     >
     </app-button>
   </div>
@@ -37,7 +37,7 @@
       class="input-field input-field_description"
       [class.invalid]="courseForm.controls['description'].invalid && (courseForm.controls['description'].touched || course.submitted)"
       formControlName="description"
-      [placeholder]="courseItem.description"
+      [placeholder]="courseItem ? courseItem.description : ''"
     >
     </textarea>
     <div
@@ -59,7 +59,7 @@
           [class.invalid]="courseForm.controls['author'].invalid && (courseForm.controls['author'].touched || course.submitted)"
           type="text"
           formControlName="author"
-          [placeholder]="courseItem.authors[0]"
+          [placeholder]="courseItem ? courseItem.authors[0] : ''"
         >
         <div
           class="invalid-message"
@@ -72,6 +72,7 @@
         <app-button
           class="add-author-button"
           [buttonText]="createAuthorButtonText"
+          [buttonType]="buttonTypeButton"
           (click)="addAuthor()"
           [disabled]="courseForm.controls['author'].invalid"
         >
@@ -85,7 +86,7 @@
           [class.invalid]="courseForm.controls['duration'].invalid && (courseForm.controls['duration'].touched || course.submitted)"
           type="number"
           formControlName="duration"
-          [placeholder]="courseItem.duration"
+          [placeholder]="courseItem ? courseItem.duration : ''"
         >
         <div
           class="invalid-message"
@@ -111,6 +112,7 @@
         <input class="author" type="text" [formControlName]="i">
         <app-button
           [buttonText]="deleteAuthorButtonText"
+          [buttonType]="buttonTypeButton"
           (click)="deleteAuthor(i)"
         >
         </app-button>

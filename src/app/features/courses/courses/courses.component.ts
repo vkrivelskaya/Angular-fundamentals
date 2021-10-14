@@ -16,14 +16,14 @@ export class CoursesComponent implements OnInit {
   searchInputPlaceholder = 'Angular';
   isEditable!: boolean;
   isCoursesListEmpty!: boolean;
-  addNewCourse = ButtonsEnum.addCourse;
+  addNewCourseText = ButtonsEnum.addCourse;
   okButtonText = ButtonsEnum.ok;
   cancelButtonText = ButtonsEnum.cancel;
   modalWindowButtonText = ButtonsEnum.modalWindow;
   modalWindowTitle = 'Title';
   modalWindowMessage = 'Delete course?';
   title = 'Your list is empty';
-  text = `Please, use '${this.addNewCourse}' button to add your first course`;
+  text = `Please, use '${this.addNewCourseText}' button to add your first course`;
   isModalWindow = false;
   buttonMap: { [key: string]: any } = {
     'text/Ok': this.confirmModalMessage,
@@ -44,7 +44,7 @@ export class CoursesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.checkUserRole();
+    this.checkUserRole();
     this.isEditable = true;
 
     this.coursesStore.courses$.subscribe(courses => {
@@ -104,5 +104,10 @@ export class CoursesComponent implements OnInit {
 
   searchCourse(value: string): void {
     this.courses = this.coursesStore.searchCourse(value);
+  }
+
+  addNewCourse(): void {
+    console.log('Show button clicked!');
+    this.router.navigateByUrl('courses/add');
   }
 }
