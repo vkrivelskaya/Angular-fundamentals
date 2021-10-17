@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { IAuthor } from '../../constants/models';
+import { IAuthor, IAuthorResponse } from '../../constants/models';
 import { authorsAddUrl, authorsAllUrl } from '../../constants/urls';
 
 @Injectable({
@@ -18,8 +18,8 @@ export class AuthorsService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<IAuthor[]> {
-    return this.http.get<IAuthor[]>(this.authorsAllUrl);
+  getAll(): Observable<IAuthorResponse> {
+    return this.http.get<IAuthorResponse>(this.authorsAllUrl);
   }
 
   addAuthor(author: IAuthor): Observable<IAuthor> {

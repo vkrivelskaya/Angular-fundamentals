@@ -2,6 +2,10 @@ export interface IAuthor {
   name: string;
   id: string;
 }
+export interface IAuthorResponse {
+  successful: boolean;
+  result: IAuthor[];
+}
 
 export interface ICourse {
   title: string;
@@ -49,4 +53,9 @@ export interface ICourseResponse {
     authors: string[];
     id: string;
   };
+}
+
+export interface ICoursesResponse {
+  successful: boolean;
+  result: ICourse[];
 }

@@ -15,7 +15,7 @@ export class AuthorsEffects {
       ofType(AuthorsActions.requestAuthors),
       switchMap(() =>
         this.authorsService.getAll().pipe(
-          map(response => AuthorsActions.requestAuthorsSuccess({ authors: response })),
+          map(response => AuthorsActions.requestAuthorsSuccess({ authors: response.result })),
           catchError(error => of(AuthorsActions.requestAuthorsFail({ err: error })))
         )
       )
