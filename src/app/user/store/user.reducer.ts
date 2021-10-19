@@ -5,21 +5,21 @@ import * as UserActions from './user.actions';
 export interface UserState {
   users: IUser[] | null;
   selectedUser: IUser | null;
-  isAdmin: boolean | null;
-  name: string | null;
+  isAdmin: boolean;
+  name: string | undefined;
 }
 
 export const initialUserState: UserState = {
   users: null,
   selectedUser: null,
-  isAdmin: null,
-  name: null
+  isAdmin: false,
+  name: undefined
 };
 
 const reducer = createReducer(
   initialUserState,
-  on(UserActions.requestCurrentUserSuccess, (state, { user }) => {
-    return { ...state, user };
+  on(UserActions.requestCurrentUserSuccess, (state, { user, name, isAdmin }) => {
+    return { ...state, user, name, isAdmin };
   }),
   on(UserActions.requestCurrentUserFail, state => ({ ...state, selectedUser: null }))
 );

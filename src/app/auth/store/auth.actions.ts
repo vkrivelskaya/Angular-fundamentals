@@ -3,7 +3,10 @@ import { IUser } from '../../constants/models';
 
 export const requestLogin = createAction('[Login Page] Login', props<{ user: IUser }>());
 
-export const requestLoginSuccess = createAction('[Login Page] Login Success', props<{ token: string }>());
+export const requestLoginSuccess = createAction(
+  '[Login Page] Login Success',
+  props<{ token: string; isAuthorized: boolean }>()
+);
 
 export const requestLoginFail = createAction('[Login Page] Login Fail', props<{ loginErrorMessage: string }>());
 
@@ -11,7 +14,7 @@ export const requestRegister = createAction('[Register Page] Register', props<{ 
 
 export const requestRegisterSuccess = createAction(
   '[Register Page] Register Success',
-  props<{ isAuthorized: boolean }>()
+  props<{ isRegister: boolean }>()
 );
 
 export const requestRegisterFail = createAction(
@@ -19,6 +22,6 @@ export const requestRegisterFail = createAction(
   props<{ registerErrorMessage: string }>()
 );
 
-export const requestLogout = createAction('[Logout Page] Logout', props<{ token: string }>());
+export const requestLogout = createAction('[Logout Page] Logout');
 
-export const requestLogoutSuccess = createAction('[Logout Page] Logout Success', props<{ token: '' | null }>());
+export const requestLogoutSuccess = createAction('[Logout Page] Logout Success', props<{ isAuthorized: boolean }>());

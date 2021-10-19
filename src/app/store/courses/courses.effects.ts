@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as CoursesActions from '../courses/courses.actions';
-import { catchError, filter, map, switchMap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, take } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
 import { CoursesService } from '../../services/courses/courses.service';
 import { ICourse } from '../../constants/models';
 import { Router } from '@angular/router';
 import { AuthorsStateFacade } from '../authors/authors.facade';
 import { CoursesStateFacade } from './courses.facade';
+import { requestAllCourses } from '../courses/courses.actions';
 
 @Injectable()
 export class CoursesEffects {
@@ -38,7 +39,7 @@ export class CoursesEffects {
   editCourse$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CoursesActions.requestEditCourse),
-      switchMap(({ course, id }: { course: ICourse; id: string }) =>
+      switchMap(({ course }: { course: ICourse }) =>
         this.coursesService.editCourse(course).pipe(
           map(response => CoursesActions.requestEditCourseSuccess({ course: response })),
           catchError(error => of(CoursesActions.requestEditCourseFail({ err: error })))
@@ -63,14 +64,14 @@ export class CoursesEffects {
     this.actions$.pipe(
       ofType(CoursesActions.requestAllCourses),
       switchMap(() =>
-        forkJoin([this.coursesService.getAll(), this.authorsMap]).pipe(
+        forkJoin([this.coursesService.getAll(), this.authorsMap.pipe(take(1))]).pipe(
           map(response =>
             response[0].map(course => ({
               ...course,
               authors: course.authors.map(el => response[1]?.get(el))
             }))
           ),
-          map(response => CoursesActions.requestAllCoursesSuccess({ courses: response })),
+          map(response => CoursesActions.requestAllCoursesSuccess({ allCourses: response })),
           catchError(error => of(CoursesActions.requestAllCoursesFail({ err: error })))
         )
       )
@@ -82,8 +83,8 @@ export class CoursesEffects {
       ofType(CoursesActions.requestFilteredCourses),
       switchMap(({ searchValue }: { searchValue: string }) =>
         this.coursesStateFacade.allCourses$.pipe(
-          filter(courses => {
-            return Object.values(courses).filter(val => String(val).includes(searchValue)).length > 0;
+          map(courses => {
+            return courses.filter(el => Object.values(el).filter(val => String(val).includes(searchValue)).length > 0);
           }),
           map(response => CoursesActions.requestFilteredCoursesSuccess({ courses: response }))
         )
@@ -95,7 +96,7 @@ export class CoursesEffects {
     this.actions$.pipe(
       ofType(CoursesActions.requestSingleCourse),
       switchMap(({ id }: { id: string }) =>
-        forkJoin([this.coursesService.getCourse(id), this.authorsMap]).pipe(
+        forkJoin([this.coursesService.getCourse(id), this.authorsMap.pipe(take(1))]).pipe(
           map(response => ({
             ...response[0].result,
             authors: response[0].result.authors.map(el => response[1]?.get(el))

@@ -17,7 +17,13 @@ export class UserEffects {
       ofType(UserActions.requestCurrentUser),
       switchMap(() =>
         this.userService.getUser().pipe(
-          map((response: IUserResponse) => requestCurrentUserSuccess({ user: response.result })),
+          map((response: IUserResponse) =>
+            requestCurrentUserSuccess({
+              user: response.result,
+              name: response.result.name,
+              isAdmin: response.result.role === 'admin'
+            })
+          ),
           catchError(() => of(requestCurrentUserFail()))
         )
       )

@@ -45,8 +45,8 @@ export class CoursesStateFacade {
   getFilteredCourses(searchValue: string): void {
     this.store.dispatch(requestFilteredCourses({ searchValue }));
   }
-  editCourse(course: ICourse, id: string): void {
-    this.store.dispatch(requestEditCourse({ course, id }));
+  editCourse(course: ICourse): void {
+    this.store.dispatch(requestEditCourse({ course }));
   }
   createCourse(course: ICourse): void {
     this.store.dispatch(requestCreateCourse({ course }));

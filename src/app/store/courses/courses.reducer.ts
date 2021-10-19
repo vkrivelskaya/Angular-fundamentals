@@ -24,8 +24,8 @@ export const initialUserState: CoursesState = {
 
 const reducer = createReducer(
   initialUserState,
-  on(CoursesActions.requestAllCoursesSuccess, (state, { courses }) => {
-    return { ...state, courses };
+  on(CoursesActions.requestAllCoursesSuccess, (state, { allCourses }) => {
+    return { ...state, allCourses };
   }),
   on(CoursesActions.requestCreateCourseSuccess, (state, { course }) => {
     return { ...state, course };

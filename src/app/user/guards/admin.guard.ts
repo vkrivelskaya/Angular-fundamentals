@@ -4,18 +4,20 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 import { UserStoreService } from '../services/user-store.service';
+import { CoursesStateFacade } from '../../store/courses/courses.facade';
+import { UserStateFacade } from '../store/user.facade';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminGuard implements CanActivate {
-  constructor(private userService: UserStoreService, private router: Router) {}
+  constructor(private router: Router, private userStateFacade: UserStateFacade) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.userService.isAdmin$.pipe(
+    return this.userStateFacade.isAdmin$.pipe(
       take(1),
       map(data => {
         if (data) {

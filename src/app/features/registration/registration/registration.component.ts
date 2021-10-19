@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { faEye, faEyeSlash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
-import { AuthService } from '../../../auth/services/auth.service';
+import { AuthStateFacade } from '../../../auth/store/auth.facade';
 
 @Component({
   selector: 'app-registration',
@@ -22,8 +22,9 @@ export class RegistrationComponent implements OnInit, AfterViewChecked {
   eyeIcon = faEye;
   eyeSlashIcon = faEyeSlash;
   passwordIcon!: IconDefinition;
+  isUserRegister = this.authStateFacade.isRegister$;
 
-  constructor(private ref: ChangeDetectorRef, private authService: AuthService, private router: Router) {}
+  constructor(private ref: ChangeDetectorRef, private router: Router, private authStateFacade: AuthStateFacade) {}
 
   ngOnInit() {
     this.passwordIcon = this.eyeIcon;
@@ -46,7 +47,10 @@ export class RegistrationComponent implements OnInit, AfterViewChecked {
         name: registrationForm.form.value.name
       };
 
-      this.authService.register(user).subscribe(data => {
+      this.authStateFacade.register(user);
+
+      this.isUserRegister.subscribe(data => {
+        console.log(data);
         if (data) {
           this.router.navigateByUrl('/login');
         }

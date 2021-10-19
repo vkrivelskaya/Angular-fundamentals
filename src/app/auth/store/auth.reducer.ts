@@ -4,7 +4,8 @@ import * as AuthActions from './auth.actions';
 
 export interface AuthState {
   user: IUser | null;
-  isAuthorized: boolean | null;
+  isAuthorized: boolean;
+  isRegister: boolean;
   token: string | null;
   loginErrorMessage: string | null;
   registerErrorMessage: string | null;
@@ -12,7 +13,8 @@ export interface AuthState {
 
 export const initialAuthState: AuthState = {
   user: null,
-  isAuthorized: null,
+  isAuthorized: false,
+  isRegister: false,
   token: null,
   loginErrorMessage: null,
   registerErrorMessage: null
@@ -20,20 +22,20 @@ export const initialAuthState: AuthState = {
 
 const reducer = createReducer(
   initialAuthState,
-  on(AuthActions.requestLoginSuccess, (state, { token }) => {
-    return { ...state, token };
+  on(AuthActions.requestLoginSuccess, (state, { token, isAuthorized }) => {
+    return { ...state, token, isAuthorized };
   }),
   on(AuthActions.requestLoginFail, (state, { loginErrorMessage }) => {
     return { ...state, loginErrorMessage };
   }),
-  on(AuthActions.requestRegisterSuccess, (state, { isAuthorized }) => {
-    return { ...state, isAuthorized };
+  on(AuthActions.requestRegisterSuccess, (state, { isRegister }) => {
+    return { ...state, isRegister };
   }),
   on(AuthActions.requestRegisterFail, (state, { registerErrorMessage }) => {
     return { ...state, registerErrorMessage };
   }),
-  on(AuthActions.requestLogoutSuccess, (state, { token }) => {
-    return { ...state, token };
+  on(AuthActions.requestLogoutSuccess, (state, { isAuthorized }) => {
+    return { ...state, isAuthorized };
   })
 );
 

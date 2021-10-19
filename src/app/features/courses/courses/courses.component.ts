@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
-import { CoursesStoreService } from '../../../services/courses/courses-store.service';
 import { ICourse } from '../../../constants/models';
-import { UserStoreService } from '../../../user/services/user-store.service';
-import { Router } from '@angular/router';
+import { CoursesStateFacade } from '../../../store/courses/courses.facade';
+import { UserStateFacade } from '../../../user/store/user.facade';
+import { AuthorsStateFacade } from '../../../store/authors/authors.facade';
 
 @Component({
   selector: 'app-courses',
@@ -38,23 +39,36 @@ export class CoursesComponent implements OnInit {
   deletedCourseId!: string;
 
   constructor(
-    private coursesStore: CoursesStoreService,
-    private userStoreService: UserStoreService,
-    private router: Router
+    private router: Router,
+    private coursesStateFacade: CoursesStateFacade,
+    private userStateFacade: UserStateFacade,
+    private authorsStateFacade: AuthorsStateFacade
   ) {}
 
   ngOnInit(): void {
     this.checkUserRole();
-    this.isEditable = true;
+    this.userStateFacade.isAdmin$.subscribe(data => (this.isEditable = data));
+    this.authorsStateFacade.getAuthors();
 
-    this.coursesStore.courses$.subscribe(courses => {
+    this.authorsStateFacade.authors$.subscribe(() => {
+      this.coursesStateFacade.getAllCourses();
+      this.initCourses();
+    });
+  }
+
+  initCourses(): void {
+    this.coursesStateFacade.allCourses$.subscribe(courses => {
       this.courses = courses;
       this.isCoursesListEmpty = this.checkCoursesListLength();
     });
   }
 
   checkUserRole(): void {
-    this.userStoreService.isAdmin$.subscribe(data => (this.isEditable = data));
+    this.userStateFacade.isAdmin$.subscribe(data => {
+      if (data) {
+        this.isEditable = data;
+      }
+    });
   }
 
   checkCoursesListLength(): boolean {
@@ -91,7 +105,7 @@ export class CoursesComponent implements OnInit {
 
   confirmModalMessage(): void {
     this.modalResult = true;
-    this.coursesStore.deleteCourse(this.eventButtonClick.args.courseID);
+    this.coursesStateFacade.deleteCourse(this.eventButtonClick.args.courseID);
     this.changeModalVisibility();
   }
 
@@ -103,7 +117,14 @@ export class CoursesComponent implements OnInit {
   }
 
   searchCourse(value: string): void {
-    this.courses = this.coursesStore.searchCourse(value);
+    // this.courses = this.coursesStore.searchCourse(value);
+
+    this.coursesStateFacade.getFilteredCourses(value);
+
+    this.coursesStateFacade.courses$.subscribe(courses => {
+      this.courses = courses;
+      this.isCoursesListEmpty = this.checkCoursesListLength();
+    });
   }
 
   addNewCourse(): void {

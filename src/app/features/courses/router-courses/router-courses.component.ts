@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
-import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
-import { UserStoreService } from '../../../user/services/user-store.service';
+import { UserStateFacade } from '../../../user/store/user.facade';
+import { AuthStateFacade } from '../../../auth/store/auth.facade';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -12,16 +12,28 @@ import { Observable } from 'rxjs';
 })
 export class RouterCoursesComponent implements OnInit {
   buttonText = ButtonsEnum.logOut;
-  name!: Observable<string>;
-  constructor(private authService: AuthService, private router: Router, private userStoreService: UserStoreService) {}
+  name!: string | undefined;
+  isAuthorized!: Observable<boolean>;
+
+  constructor(
+    private router: Router,
+    private userStateFacade: UserStateFacade,
+    private authStateFacade: AuthStateFacade
+  ) {}
 
   ngOnInit() {
-    this.name = this.userStoreService.name$;
+    this.userStateFacade.getCurrentUser();
+    this.userStateFacade.name$.subscribe(name => (this.name = name));
+    this.isAuthorized = this.authStateFacade.isAuthorized$;
   }
 
-  logout() {
-    this.authService.logout().subscribe(() => {
-      this.router.navigateByUrl('/login');
+  logout(): void {
+    this.authStateFacade.closeSession();
+
+    this.isAuthorized.subscribe(data => {
+      if (!data) {
+        this.router.navigateByUrl('/login');
+      }
     });
   }
 }

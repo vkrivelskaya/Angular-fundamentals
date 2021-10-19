@@ -12,18 +12,54 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ILoginResponse, IUser } from '../../constants/models';
+import { SessionStorageService } from '../services/session-storage.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
-  constructor(private authService: AuthService, private actions$: Actions) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private actions$: Actions,
+    private sessionStorageService: SessionStorageService
+  ) {}
 
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.requestLogin),
       switchMap(({ user }: { user: IUser }) =>
         this.authService.login(user).pipe(
-          map((response: ILoginResponse) => AuthActions.requestLoginSuccess({ token: response.result })),
+          map((response: ILoginResponse) => {
+            this.sessionStorageService.setToken(response.result);
+            return AuthActions.requestLoginSuccess({ token: response.result, isAuthorized: response.successful });
+          }),
           catchError(error => of(AuthActions.requestLoginFail({ loginErrorMessage: error.name })))
+        )
+      )
+    )
+  );
+
+  register$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.requestRegister),
+      switchMap(({ user }: { user: IUser }) =>
+        this.authService.register(user).pipe(
+          map(response => AuthActions.requestRegisterSuccess({ isRegister: response })),
+          catchError(error => of(AuthActions.requestRegisterFail({ registerErrorMessage: error.name })))
+        )
+      )
+    )
+  );
+
+  logout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.requestLogout),
+      switchMap(() =>
+        this.authService.logout().pipe(
+          map(() => {
+            this.router.navigateByUrl('/login');
+            return AuthActions.requestLogoutSuccess({ isAuthorized: false });
+          })
         )
       )
     )

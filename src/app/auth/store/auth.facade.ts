@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../store';
 import { requestCurrentUser } from '../../user/store/user.actions';
-import { getLoginErrorMessage, getRegisterErrorMessage, getToken, isUserAuthorized } from './auth.selectors';
+import {
+  getLoginErrorMessage,
+  getRegisterErrorMessage,
+  getToken,
+  isUserAuthorized,
+  isUserRegister
+} from './auth.selectors';
 import {
   requestLogin,
   requestLoginSuccess,
@@ -18,6 +24,7 @@ import { SessionStorageService } from '../services/session-storage.service';
 })
 export class AuthStateFacade {
   isAuthorized$ = this.store.pipe(select(isUserAuthorized));
+  isRegister$ = this.store.pipe(select(isUserRegister));
   getToken$ = this.store.pipe(select(getToken));
   getLoginErrorMessage$ = this.store.pipe(select(getLoginErrorMessage));
   getRegisterErrorMessage$ = this.store.pipe(select(getRegisterErrorMessage));
@@ -28,24 +35,26 @@ export class AuthStateFacade {
     this.store.dispatch(requestCurrentUser());
   }
 
-  login(user: IUser): void {
+  login(user: IUser) {
     this.store.dispatch(requestLogin({ user: user }));
   }
 
   register(user: IUser): void {
     this.store.dispatch(requestRegister({ user: user }));
   }
-  logout(token: string): void {
-    this.store.dispatch(requestLogout({ token: token }));
+
+  logout(): void {
+    this.store.dispatch(requestLogout());
   }
-  closeSession(token: null | ''): void {
-    this.store.dispatch(requestLogoutSuccess({ token: token }));
+
+  closeSession(): void {
+    this.store.dispatch(requestLogoutSuccess({ isAuthorized: false }));
   }
 
   setAuthorization(): void {
     const token = this.sessionStorageService.getToken();
     if (token) {
-      this.store.dispatch(requestLoginSuccess({ token: token }));
+      this.store.dispatch(requestLoginSuccess({ token: token, isAuthorized: true }));
     }
   }
 }
