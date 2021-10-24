@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ButtonsEnum } from '../../../../shared/enums/buttons.enum';
 import { authorNameValidator } from '../../../../shared/directives/author-validator.directive';
+import { CoursesStoreService } from '../../../../services/courses/courses-store.service';
+import { ICourse } from '../../../../constants/models';
 
 @Component({
   selector: 'app-course',
@@ -10,29 +13,59 @@ import { authorNameValidator } from '../../../../shared/directives/author-valida
   styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit {
-  buttonType = 'submit';
+  buttonTypeSubmit = 'submit';
+  buttonTypeButton = 'button';
   createCourseButtonText = ButtonsEnum.createCourse;
   createAuthorButtonText = ButtonsEnum.createAuthor;
   deleteAuthorButtonText = ButtonsEnum.deleteAuthor;
   courseForm!: FormGroup;
   author!: FormGroup;
+  courseItem!: ICourse;
+  id!: string | null;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private coursesStoreService: CoursesStoreService
+  ) {}
 
   ngOnInit() {
-    this.courseForm = this.fb.group(
-      {
-        title: ['', [Validators.required]],
-        description: ['', [Validators.required]],
-        duration: ['', [Validators.required, Validators.min(1)]],
-        author: this.fb.group({
-          author: ['', [authorNameValidator()]]
-        }),
+    this.id = this.route.snapshot.paramMap.get('id');
 
-        authors: this.fb.array([])
-      },
-      { updateOn: 'blur' }
-    );
+    if (this.id && this.id !== 'add') {
+      this.coursesStoreService.getCourse(this.id).subscribe(course => {
+        this.courseItem = course;
+
+        this.courseForm = this.fb.group(
+          {
+            title: [`${course.title}` || '', [Validators.required]],
+            description: [`${course.description}` || '', [Validators.required]],
+            duration: [`${course.duration}` || '', [Validators.required, Validators.min(1)]],
+            author: this.fb.group({
+              author: [`${course.authors[0]}` || '', [authorNameValidator()]]
+            }),
+
+            authors: this.fb.array([])
+          },
+          { updateOn: 'blur' }
+        );
+      });
+    } else {
+      this.courseForm = this.fb.group(
+        {
+          title: ['', [Validators.required]],
+          description: ['', [Validators.required]],
+          duration: ['', [Validators.required, Validators.min(1)]],
+          author: this.fb.group({
+            author: ['', [authorNameValidator()]]
+          }),
+
+          authors: this.fb.array([])
+        },
+        { updateOn: 'blur' }
+      );
+    }
   }
 
   get authors() {
@@ -49,7 +82,26 @@ export class CourseComponent implements OnInit {
 
   onSubmit() {
     if (this.courseForm.valid && this.authors.valid) {
-      console.log(this.courseForm.value);
+      const updatedCourse: ICourse = {
+        title: this.courseForm.value.title,
+        description: this.courseForm.value.description,
+        creationDate: this.courseForm.value.creationDate,
+        duration: this.courseForm.value.duration,
+        authors: this.courseForm.value.authors
+      };
+      if (this.courseItem && this.courseItem.id !== 'add') {
+        updatedCourse.id = this.courseItem.id;
+        this.coursesStoreService.editCourse(updatedCourse);
+        console.log(updatedCourse);
+      } else {
+        this.coursesStoreService.createCourse(updatedCourse);
+      }
+
+      this.coursesStoreService.isLoading$.subscribe(data => {
+        if (!data) {
+          this.router.navigateByUrl('courses/list');
+        }
+      });
     }
   }
 }

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Courses } from '../../mock/course-data.mock';
 import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
+import { CoursesStoreService } from '../../../services/courses/courses-store.service';
+import { ICourse } from '../../../constants/models';
+import { UserStoreService } from '../../../user/services/user-store.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-courses',
@@ -9,19 +12,18 @@ import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
   styleUrls: ['./courses.component.scss']
 })
 export class CoursesComponent implements OnInit {
-  courses = Courses;
+  courses!: ICourse[];
   searchInputPlaceholder = 'Angular';
   isEditable!: boolean;
   isCoursesListEmpty!: boolean;
-  buttonText = ButtonsEnum.logOut;
-  addNewCourse = ButtonsEnum.addCourse;
+  addNewCourseText = ButtonsEnum.addCourse;
   okButtonText = ButtonsEnum.ok;
   cancelButtonText = ButtonsEnum.cancel;
   modalWindowButtonText = ButtonsEnum.modalWindow;
   modalWindowTitle = 'Title';
-  modalWindowMessage = 'Modal window message';
+  modalWindowMessage = 'Delete course?';
   title = 'Your list is empty';
-  text = `Please, use '${this.addNewCourse}' button to add your first course`;
+  text = `Please, use '${this.addNewCourseText}' button to add your first course`;
   isModalWindow = false;
   buttonMap: { [key: string]: any } = {
     'text/Ok': this.confirmModalMessage,
@@ -32,36 +34,55 @@ export class CoursesComponent implements OnInit {
     'icon/trash': this.deleteCourse
   };
   modalResult!: boolean;
+  eventButtonClick!: any;
+  deletedCourseId!: string;
 
-  constructor() {}
+  constructor(
+    private coursesStore: CoursesStoreService,
+    private userStoreService: UserStoreService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.checkUserRole();
     this.isEditable = true;
-    this.isCoursesListEmpty = this.checkCoursesListLength();
+
+    this.coursesStore.courses$.subscribe(courses => {
+      this.courses = courses;
+      this.isCoursesListEmpty = this.checkCoursesListLength();
+    });
+  }
+
+  checkUserRole(): void {
+    this.userStoreService.isAdmin$.subscribe(data => (this.isEditable = data));
   }
 
   checkCoursesListLength(): boolean {
     return this.courses.length === 0;
   }
 
-  getButton(event: any): string {
-    return event.buttonText ? `text/${event.buttonText}` : `icon/${event.buttonIcon.iconName}`;
+  getButton(button: any): string {
+    return button.buttonText ? `text/${button.buttonText}` : `icon/${button.buttonIcon.iconName}`;
   }
 
   onButtonClick(event: any): void {
-    this.buttonMap[this.getButton(event)].bind(this)();
+    this.eventButtonClick = event;
+    this.buttonMap[this.getButton(event.button)].bind(this)(event.args);
   }
 
-  showCourse(): void {
+  showCourse(args: { courseId: string }): void {
     console.log('Show button clicked!');
+    this.router.navigateByUrl(`courses/${args.courseId}`);
   }
 
-  editCourse(): void {
-    console.log('Edit button clicked!');
+  editCourse(args: { courseId: string }): void {
+    console.log('Edit button clicked!', args.courseId);
+    this.router.navigateByUrl(`courses/edit/${args.courseId}`);
   }
 
-  deleteCourse(): void {
-    console.log('Delete button clicked!');
+  deleteCourse(args: { courseId: string }): void {
+    this.deletedCourseId = args.courseId;
+    this.changeModalVisibility();
   }
 
   changeModalVisibility(): void {
@@ -70,9 +91,8 @@ export class CoursesComponent implements OnInit {
 
   confirmModalMessage(): void {
     this.modalResult = true;
+    this.coursesStore.deleteCourse(this.eventButtonClick.args.courseID);
     this.changeModalVisibility();
-
-    console.log(this.modalResult);
   }
 
   cancelModalMessage(): void {
@@ -83,6 +103,11 @@ export class CoursesComponent implements OnInit {
   }
 
   searchCourse(value: string): void {
-    console.log(value);
+    this.courses = this.coursesStore.searchCourse(value);
+  }
+
+  addNewCourse(): void {
+    console.log('Show button clicked!');
+    this.router.navigateByUrl('courses/add');
   }
 }

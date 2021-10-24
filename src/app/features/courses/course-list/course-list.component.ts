@@ -4,6 +4,7 @@ import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { Course } from '../../models/course';
 import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
+import { ICourse } from '../../../constants/models';
 
 @Component({
   selector: 'app-course-list',
@@ -11,9 +12,12 @@ import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
   styleUrls: ['./course-list.component.scss']
 })
 export class CourseListComponent {
-  @Input() courses!: Course[];
+  @Input() courses!: ICourse[] | null;
   @Input() isEditable!: boolean;
   @Output() clickButton = new EventEmitter();
+
+  editCourseLink = 'edit';
+  deleteCourseLink = 'courses';
 
   penIcon = faPen;
   trashIcon = faTrash;
@@ -21,7 +25,7 @@ export class CourseListComponent {
 
   constructor() {}
 
-  onButtonClick(value: any): void {
-    this.clickButton.emit(value);
+  onButtonClick(value: any, args?: { [key: string]: any }): void {
+    this.clickButton.emit({ button: value, args: args });
   }
 }

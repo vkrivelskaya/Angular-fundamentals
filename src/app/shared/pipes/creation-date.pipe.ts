@@ -5,8 +5,8 @@ import { DatePipe } from '@angular/common';
   name: 'creationDate'
 })
 export class CreationDatePipe implements PipeTransform {
-  transform(date: Date, format = 'dd.MM.YYYY'): string | null {
-    date = new Date(date);
-    return new DatePipe('en-US').transform(date, format);
+  transform(date: string, format = 'dd.MM.YYYY'): string | null {
+    const transformedDate = new Date(date);
+    return new DatePipe('en-US').transform(transformedDate, format);
   }
 }

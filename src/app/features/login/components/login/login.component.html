@@ -4,6 +4,30 @@
   #form="ngForm"
   (ngSubmit)="login(form)"
 >
+  <div class="name-container">
+    <label class="label">Name</label>
+    <input
+      class="input-field"
+      [class.invalid]="nameField.invalid && (nameField.touched || form.submitted)"
+      type="text"
+      name="name"
+      required
+      minlength="6"
+      [(ngModel)]="name"
+      #nameField="ngModel"
+    >
+    <div
+      class="invalid-message"
+      *ngIf="nameField.invalid && (form.submitted || nameField.touched)"
+    >
+      <div *ngIf="nameField.errors?.required">
+        Name is required.
+      </div>
+      <div *ngIf="nameField.errors?.minlength">
+        Name must be at least 6 characters long.
+      </div>
+    </div>
+  </div>
   <div class="email-container">
     <label class="label">Email</label>
     <input
@@ -66,7 +90,7 @@
       <p class="registration-message">
         If you don't have an account you can
       </p>
-      <a href="#"> Registration</a>
+      <a routerLink="/registration"> Registration</a>
     </div>
   </div>
 </form>

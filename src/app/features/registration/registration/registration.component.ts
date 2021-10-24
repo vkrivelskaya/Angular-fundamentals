@@ -1,8 +1,10 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { faEye, faEyeSlash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -21,7 +23,7 @@ export class RegistrationComponent implements OnInit, AfterViewChecked {
   eyeSlashIcon = faEyeSlash;
   passwordIcon!: IconDefinition;
 
-  constructor(private ref: ChangeDetectorRef) {}
+  constructor(private ref: ChangeDetectorRef, private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.passwordIcon = this.eyeIcon;
@@ -38,10 +40,17 @@ export class RegistrationComponent implements OnInit, AfterViewChecked {
 
   register(registrationForm: NgForm) {
     if (registrationForm && registrationForm.valid) {
-      const userEmail = registrationForm.form.value.mail;
-      const password = registrationForm.form.value.password;
-      const name = registrationForm.form.value.name;
-      console.log(userEmail, password, name);
+      const user = {
+        email: registrationForm.form.value.mail,
+        password: registrationForm.form.value.password,
+        name: registrationForm.form.value.name
+      };
+
+      this.authService.register(user).subscribe(data => {
+        if (data) {
+          this.router.navigateByUrl('/login');
+        }
+      });
     }
   }
 }

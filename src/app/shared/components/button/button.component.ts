@@ -11,6 +11,8 @@ export class ButtonComponent {
   @Input() buttonText!: ButtonsEnum;
   @Input() buttonIcon: any;
   @Input() buttonType!: string;
+  @Input() link!: string;
+  @Input() id!: string;
   @Input() disabled!: boolean;
 
   constructor() {}
