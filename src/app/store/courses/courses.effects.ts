@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as CoursesActions from '../courses/courses.actions';
-import { catchError, filter, map, switchMap, take } from 'rxjs/operators';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
 import { CoursesService } from '../../services/courses/courses.service';
 import { ICourse } from '../../constants/models';
 import { Router } from '@angular/router';
 import { AuthorsStateFacade } from '../authors/authors.facade';
 import { CoursesStateFacade } from './courses.facade';
-import { requestAllCourses } from '../courses/courses.actions';
 
 @Injectable()
 export class CoursesEffects {
