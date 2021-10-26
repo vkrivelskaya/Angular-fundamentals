@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import { Course } from '../../models/course';
 import { ButtonsEnum } from '../../../shared/enums/buttons.enum';
 import { ICourse } from '../../../constants/models';
 

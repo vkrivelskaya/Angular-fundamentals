@@ -19,8 +19,8 @@ export class AuthorsStoreService {
   getAll() {
     this.isLoading$$.next(true);
     this.authorsService.getAll().subscribe(
-      authors => {
-        this.authors$$.next(authors);
+      response => {
+        this.authors$$.next(response.result);
         this.isLoading$$.next(false);
       },
       () => {

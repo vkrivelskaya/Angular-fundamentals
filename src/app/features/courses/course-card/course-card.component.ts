@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { Course } from '../../models/course';
 import { ICourse } from '../../../constants/models';
 
 @Component({

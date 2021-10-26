@@ -2,6 +2,10 @@ export interface IAuthor {
   name: string;
   id: string;
 }
+export interface IAuthorResponse {
+  successful: boolean;
+  result: IAuthor[];
+}
 
 export interface ICourse {
   title: string;
@@ -16,6 +20,8 @@ export interface IUser {
   name?: string;
   email: string;
   password: string;
+  role?: string;
+  id?: string;
 }
 
 export interface ILoginResponse {
@@ -34,13 +40,7 @@ export interface IRegisterResponse {
 
 export interface IUserResponse {
   successful: boolean;
-  result: {
-    name: string;
-    email: string;
-    password: string;
-    role: string;
-    id: string;
-  };
+  result: IUser;
 }
 
 export interface ICourseResponse {
@@ -53,4 +53,9 @@ export interface ICourseResponse {
     authors: string[];
     id: string;
   };
+}
+
+export interface ICoursesResponse {
+  successful: boolean;
+  result: ICourse[];
 }

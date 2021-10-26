@@ -21,13 +21,13 @@ export class AuthService {
 
   constructor(private sessionStorageService: SessionStorageService, private http: HttpClient, private router: Router) {}
 
-  login(user: IUser): Observable<boolean> {
+  login(user: IUser): Observable<ILoginResponse> {
     return this.http.post<ILoginResponse>(this.loginUrl, user).pipe(
       map(data => {
         this.sessionStorageService.setToken(data.result);
         this.isAuthorized$$.next(data.successful);
 
-        return data.successful;
+        return data;
       })
     );
   }

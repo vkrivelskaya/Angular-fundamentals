@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { ButtonsEnum } from '../../../../shared/enums/buttons.enum';
 import { authorNameValidator } from '../../../../shared/directives/author-validator.directive';
-import { CoursesStoreService } from '../../../../services/courses/courses-store.service';
 import { ICourse } from '../../../../constants/models';
+import { CoursesStateFacade } from '../../../../store/courses/courses.facade';
 
 @Component({
   selector: 'app-course',
@@ -27,29 +27,32 @@ export class CourseComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private coursesStoreService: CoursesStoreService
+    private coursesStateFacade: CoursesStateFacade
   ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.id && this.id !== 'add') {
-      this.coursesStoreService.getCourse(this.id).subscribe(course => {
-        this.courseItem = course;
+      this.coursesStateFacade.getSingleCourse(this.id);
+      this.coursesStateFacade.course$.subscribe(course => {
+        if (course) {
+          this.courseItem = course;
 
-        this.courseForm = this.fb.group(
-          {
-            title: [`${course.title}` || '', [Validators.required]],
-            description: [`${course.description}` || '', [Validators.required]],
-            duration: [`${course.duration}` || '', [Validators.required, Validators.min(1)]],
-            author: this.fb.group({
-              author: [`${course.authors[0]}` || '', [authorNameValidator()]]
-            }),
+          this.courseForm = this.fb.group(
+            {
+              title: [`${course.title}` || '', [Validators.required]],
+              description: [`${course.description}` || '', [Validators.required]],
+              duration: [`${course.duration}` || '', [Validators.required, Validators.min(1)]],
+              author: this.fb.group({
+                author: [`${course.authors[0]}` || '', [authorNameValidator()]]
+              }),
 
-            authors: this.fb.array([])
-          },
-          { updateOn: 'blur' }
-        );
+              authors: this.fb.array([])
+            },
+            { updateOn: 'blur' }
+          );
+        }
       });
     } else {
       this.courseForm = this.fb.group(
@@ -91,17 +94,11 @@ export class CourseComponent implements OnInit {
       };
       if (this.courseItem && this.courseItem.id !== 'add') {
         updatedCourse.id = this.courseItem.id;
-        this.coursesStoreService.editCourse(updatedCourse);
+        this.coursesStateFacade.editCourse(updatedCourse);
         console.log(updatedCourse);
       } else {
-        this.coursesStoreService.createCourse(updatedCourse);
+        this.coursesStateFacade.createCourse(updatedCourse);
       }
-
-      this.coursesStoreService.isLoading$.subscribe(data => {
-        if (!data) {
-          this.router.navigateByUrl('courses/list');
-        }
-      });
     }
   }
 }
